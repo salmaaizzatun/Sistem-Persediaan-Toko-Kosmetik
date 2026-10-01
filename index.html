@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlowStock - Persediaan Kosmetik</title>
+    <link rel="stylesheet" href="css/style.css?v=glow-dark-mode-1">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✿</div>
+            <div>
+                <h2>GlowStock</h2>
+                <p>Inventory System</p>
+            </div>
+        </div>
+
+        <nav>
+            <button class="nav-item active" data-page="dashboard">🏠 Dashboard</button>
+            <button class="nav-item" data-page="produk">💄 Data Produk</button>
+            <button class="nav-item" data-page="supplier">📦 Supplier</button>
+            <button class="nav-item" data-page="transaksi">🧾 Transaksi</button>
+            <button class="nav-item" data-page="laporan">📊 Laporan</button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Sistem Persediaan</p>
+            <span>Toko Kosmetik</span>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="welcome">Selamat datang kembali ✨</p>
+                <h1 id="page-title">Dashboard</h1>
+            </div>
+            <div class="topbar-actions">
+                <div class="date-box">
+                    <span>📅</span>
+                    <span id="current-date">-</span>
+                </div>
+                <button type="button" class="theme-toggle" id="theme-toggle" title="Ganti Tema" aria-label="Ganti Tema">🌙</button>
+            </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard-page" class="page active-page">
+            <div class="hero-card">
+                <div>
+                    <p class="hero-small">SISTEM PERSEDIAAN</p>
+                    <h2>Kelola stok kosmetik dengan lebih mudah ✨</h2>
+                    <p>Pantau produk, supplier, transaksi masuk dan keluar dalam satu sistem.</p>
+                </div>
+                <div class="hero-decoration" role="img" aria-label="Lipstik">
+                    <span class="hero-product-icon" id="hero-product-icon">💄</span>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-icon pink">💄</div>
+                    <div>
+                        <span>Total Produk</span>
+                        <strong id="total-produk">0</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">📦</div>
+                    <div>
+                        <span>Total Stok</span>
+                        <strong id="total-stok">0</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow">💰</div>
+                    <div>
+                        <span>Nilai Persediaan</span>
+                        <strong id="nilai-persediaan">Rp0</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">🧾</div>
+                    <div>
+                        <span>Total Transaksi</span>
+                        <strong id="total-transaksi">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Tren Stok</h3>
+                            <p>Total stok per kategori</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart-tren-stok" aria-label="Grafik total stok per kategori" role="img"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Kategori Produk</h3>
+                            <p>Jumlah produk per kategori</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart-kategori" aria-label="Grafik jumlah produk per kategori" role="img"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Produk Stok Menipis</h3>
+                            <p>Perlu segera diperhatikan</p>
+                        </div>
+                    </div>
+                    <div id="low-stock-list" class="low-stock-list"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Transaksi Terbaru</h3>
+                            <p>Aktivitas persediaan</p>
+                        </div>
+                    </div>
+                    <div id="recent-transactions" class="recent-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUK -->
+        <section id="produk-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h2>Data Produk</h2>
+                    <p>Kelola data produk kosmetik</p>
+                </div>
+                <button class="btn btn-primary" id="btn-tambah-produk">+ Tambah Produk</button>
+            </div>
+
+            <div class="toolbar">
+                <input type="text" id="search-produk" placeholder="🔍 Cari produk...">
+                <select id="filter-kategori">
+                    <option value="">Semua Kategori</option>
+                    <option value="Skincare">Skincare</option>
+                    <option value="Makeup">Makeup</option>
+                    <option value="Bodycare">Bodycare</option>
+                    <option value="Haircare">Haircare</option>
+                </select>
+            </div>
+
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode</th>
+                            <th>Produk</th>
+                            <th>Kategori</th>
+                            <th>Harga Beli</th>
+                            <th>Harga Jual</th>
+                            <th>Stok</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="produk-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SUPPLIER -->
+        <section id="supplier-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h2>Data Supplier</h2>
+                    <p>Kelola pemasok produk kosmetik</p>
+                </div>
+                <button class="btn btn-primary" id="btn-tambah-supplier">+ Tambah Supplier</button>
+            </div>
+
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Supplier</th>
+                            <th>No. Telepon</th>
+                            <th>Alamat</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="supplier-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TRANSAKSI -->
+        <section id="transaksi-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h2>Transaksi Persediaan</h2>
+                    <p>Catat transaksi barang masuk dan barang keluar</p>
+                </div>
+                <button class="btn btn-primary" id="btn-tambah-transaksi">+ Transaksi Baru</button>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Informasi</strong>
+                <p>Transaksi <b>MASUK</b> menambah stok, sedangkan transaksi <b>KELUAR</b> mengurangi stok.</p>
+            </div>
+
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nomor Transaksi</th>
+                            <th>Tanggal</th>
+                            <th class="transaction-type-column">Tipe</th>
+                            <th>Pihak</th>
+                            <th>Metode</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaksi-table"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- LAPORAN -->
+        <section id="laporan-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h2>Laporan Persediaan</h2>
+                    <p>Informasi nilai persediaan berdasarkan harga beli</p>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode</th>
+                            <th>Nama Produk</th>
+                            <th>Kategori</th>
+                            <th>Stok</th>
+                            <th>Harga Beli</th>
+                            <th>Nilai Persediaan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="laporan-table"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL PRODUK -->
+    <div id="produk-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 id="produk-modal-title">Tambah Produk</h3>
+                    <p>Isi informasi produk</p>
+                </div>
+                <button class="close-modal" data-modal="produk-modal">×</button>
+            </div>
+
+            <form id="produk-form">
+                <input type="hidden" id="produk-id">
+                <label>Kode Produk</label>
+                <input type="text" id="kode-produk" required>
+
+                <label>Nama Produk</label>
+                <input type="text" id="nama-produk" required>
+
+                <label>Kategori</label>
+                <select id="kategori-produk" required>
+                    <option value="">Pilih kategori</option>
+                    <option value="Skincare">Skincare</option>
+                    <option value="Makeup">Makeup</option>
+                    <option value="Bodycare">Bodycare</option>
+                    <option value="Haircare">Haircare</option>
+                </select>
+
+                <div class="form-row">
+                    <div>
+                        <label>Harga Beli</label>
+                        <input type="number" id="harga-beli" min="0" required>
+                    </div>
+                    <div>
+                        <label>Harga Jual</label>
+                        <input type="number" id="harga-jual" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div>
+                        <label>Stok</label>
+                        <input type="number" id="stok-produk" min="0" required>
+                    </div>
+                    <div>
+                        <label>Stok Minimum</label>
+                        <input type="number" id="stok-minimum" min="0" value="5" required>
+                    </div>
+                </div>
+
+                <label>Satuan</label>
+                <select id="satuan-produk">
+                    <option value="pcs">pcs</option>
+                    <option value="box">box</option>
+                    <option value="botol">botol</option>
+                    <option value="tube">tube</option>
+                </select>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-modal" data-modal="produk-modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL SUPPLIER -->
+    <div id="supplier-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 id="supplier-modal-title">Tambah Supplier</h3>
+                    <p>Isi informasi supplier</p>
+                </div>
+                <button class="close-modal" data-modal="supplier-modal">×</button>
+            </div>
+
+            <form id="supplier-form">
+                <input type="hidden" id="supplier-id">
+                <label>Nama Supplier</label>
+                <input type="text" id="nama-supplier" required>
+
+                <label>Nomor Telepon</label>
+                <input type="text" id="telepon-supplier">
+
+                <label>Alamat</label>
+                <textarea id="alamat-supplier" rows="4"></textarea>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-modal" data-modal="supplier-modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TRANSAKSI -->
+    <div id="transaksi-modal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <div>
+                    <h3 id="transaksi-modal-title">Transaksi Baru</h3>
+                    <p>Catat barang masuk atau keluar</p>
+                </div>
+                <button class="close-modal" data-modal="transaksi-modal">×</button>
+            </div>
+
+            <form id="transaksi-form">
+                <input type="hidden" id="transaksi-edit-id">
+                <div class="form-row">
+                    <div>
+                        <label for="tipe-transaksi">Kategori Transaksi</label>
+                        <select id="tipe-transaksi" required>
+                            <option value="MASUK">📥 Transaksi ke Supplier (Beli Barang)</option>
+                            <option value="KELUAR">📤 Transaksi ke Pelanggan (Jual Barang)</option>
+                        </select>
+                    </div>
+
+                    <div id="supplier-transaksi-group">
+                        <label for="supplier-transaksi">Supplier</label>
+                        <select id="supplier-transaksi">
+                            <option value="">Tidak ada supplier</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="pelanggan-transaksi-group" class="hidden">
+                    <div class="form-row">
+                        <div>
+                            <label for="nama-pelanggan-transaksi">Nama Pelanggan</label>
+                            <input type="text" id="nama-pelanggan-transaksi" autocomplete="name">
+                        </div>
+                        <div>
+                            <label for="telepon-pelanggan-transaksi">No. Telepon Pelanggan</label>
+                            <input type="tel" id="telepon-pelanggan-transaksi" autocomplete="tel">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row payment-fields" id="payment-transaksi-group">
+                    <div>
+                        <label for="metode-pembayaran-transaksi">Metode Pembayaran</label>
+                        <select id="metode-pembayaran-transaksi" required>
+                            <option value="">Pilih metode</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Transfer" data-payment-mode="sale">Transfer</option>
+                            <option value="Transfer Bank" data-payment-mode="supplier">Transfer Bank</option>
+                            <option value="QRIS">QRIS</option>
+                            <option value="E-Wallet">E-Wallet</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="jumlah-bayar-transaksi">Jumlah Bayar <span id="jumlah-bayar-opsional">(opsional)</span></label>
+                        <input type="number" id="jumlah-bayar-transaksi" min="0" step="1" inputmode="numeric">
+                    </div>
+
+                    <div id="kembalian-transaksi-group">
+                        <label for="kembalian-transaksi">Kembalian</label>
+                        <input type="text" id="kembalian-transaksi" value="Rp0" readonly>
+                    </div>
+                </div>
+
+                <label>Keterangan</label>
+                <textarea id="keterangan-transaksi" rows="2" placeholder="Contoh: Pembelian stok bulanan"></textarea>
+
+                <div class="transaction-builder">
+                    <div class="builder-title">
+                        <h4>Detail Produk</h4>
+                        <button type="button" class="btn btn-small" id="btn-tambah-item">+ Tambah Produk</button>
+                    </div>
+
+                    <div id="transaction-items"></div>
+
+                    <div class="transaction-total">
+                        <span>Total Transaksi</span>
+                        <strong id="transaction-total">Rp0</strong>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-modal" data-modal="transaksi-modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="transaksi-submit-button">Simpan Transaksi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SCRIPT SUPABASE (VERSI UMD)    -->
+    <!-- Bisa dipakai TANPA server!     -->
+    <!-- ============================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Script config: bikin Supabase client -->
+    <script>
+        window.supabaseClient = window.supabase.createClient(
+            "https://wnvwiffsfrxvjmxdkbaq.supabase.co",
+            "sb_publishable_zt9G9KvAgsKbawg2WAf3_w_kfqeijzA"
+        );
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Script aplikasi utama -->
+    <script src="js/app.js?v=glow-no-change-fallback-20261002"></script>
+
+</body>
+</html>
