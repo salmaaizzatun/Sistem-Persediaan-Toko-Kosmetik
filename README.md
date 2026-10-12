@@ -22,6 +22,10 @@
 
 GlowStock merupakan sistem informasi pengelolaan persediaan barang untuk toko kosmetik. Aplikasi ini dirancang agar proses pencatatan stok, pembelian dari supplier, hingga penjualan ke pelanggan menjadi lebih cepat, rapi, dan akurat. Dengan fitur dashboard, transaksi, laporan, serta validasi stok, sistem ini membantu pengelola toko dalam mengambil keputusan operasional secara lebih efektif.
 
+## 🚀 Demo Sistem
+
+Klik di sini untuk membuka sistem: [Salma Izzatun - Sistem Persediaan Toko Kosmetik](https://salmaaizzatun.github.io/Sistem-Persediaan-Toko-Kosmetik/)
+
 ## 🗺️ ERD Database
 
 Database memiliki empat tabel inti. `detail_transaksi` menghubungkan transaksi dengan produk yang dicatat di dalamnya.
