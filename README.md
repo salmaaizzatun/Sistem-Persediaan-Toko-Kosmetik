@@ -1,6 +1,26 @@
 # GlowStock — Sistem Persediaan Toko Kosmetik
 
+<div align="center">
+
+# Salma Izzatun Nisa Rahmawati
+
+</div>
+
+## Identitas Mahasiswa
+
+- **Nama**: SALMA IZZATUN NISA RAHMAWATI
+- **NIM**: 12030124120044
+- **Mata Kuliah / Kelas**: Pengkodean dan Pemrograman / D
+- **Dosen Pengampu**: Dr. Totok Dewayanto, S.E., M.Si., Akt., CA
+- **Program Studi**: S1 Akuntansi
+- **Fakultas**: Ekonomika dan Bisnis
+- **Universitas**: Universitas Diponegoro
+
 > 💄 **Kelola produk, stok, pemasok, dan transaksi toko kosmetik dalam satu aplikasi.** GlowStock membantu pemilik toko memantau persediaan, mencatat barang masuk dan keluar, serta melihat ringkasan nilai stok dengan lebih praktis.
+
+## 📌 Tentang Proyek
+
+GlowStock merupakan sistem informasi pengelolaan persediaan barang untuk toko kosmetik. Aplikasi ini dirancang agar proses pencatatan stok, pembelian dari supplier, hingga penjualan ke pelanggan menjadi lebih cepat, rapi, dan akurat. Dengan fitur dashboard, transaksi, laporan, serta validasi stok, sistem ini membantu pengelola toko dalam mengambil keputusan operasional secara lebih efektif.
 
 ## 🗺️ ERD Database
 
@@ -73,12 +93,12 @@ erDiagram
 - 🏠 **Dashboard persediaan** — ringkasan produk, total stok, nilai persediaan, dan jumlah transaksi.
 - 🌙 **Dark Mode** — ganti tema lewat tombol bulan/matahari di topbar. Pilihan disimpan di `localStorage` dengan key `glowstock_theme` dan diterapkan ke sidebar, kartu, tabel, modal, dan komponen lainnya.
 - 📈 **Grafik dashboard dengan Chart.js** — grafik garis *Tren Stok* merangkum stok per kategori, sedangkan grafik doughnut menunjukkan jumlah produk per kategori.
-- 💄 **Kelola produk** — simpan data produk, harga, kategori, satuan, dan ambang stok minimum.
+- 💄 **Kelola produk** — simpan data produk, harga, kategori, satuan, dan ambang stok minimum; setiap baris menyediakan tombol Edit dan Hapus.
 - 📦 **Kelola pemasok** — catat informasi supplier yang bekerja sama dengan toko.
 - 🔄 **Transaksi lengkap** — pilih transaksi ke supplier (`MASUK`) atau ke pelanggan (`KELUAR`). Penjualan mencatat nama dan telepon pelanggan. Metode pembayaran pelanggan mencakup Cash, QRIS, Transfer, dan E-Wallet; supplier mendukung Cash, Transfer Bank, QRIS, dan E-Wallet. Jumlah bayar supplier opsional, sedangkan kembalian penjualan dihitung otomatis.
 - 🧾 **Cetak struk** — cetak setiap transaksi dengan layout thermal 80mm, lengkap dengan informasi pihak, produk, pembayaran, dan footer.
 - ✏️ **Edit dan hapus transaksi** — perubahan transaksi memperbarui rincian dan stok; penghapusan membalik dampak transaksi ke stok.
-- 🧩 **Tabel transaksi informatif** — memuat nomor, tanggal, tipe, pihak, metode, status lunas, total, serta aksi cetak, edit, dan hapus.
+- 🧩 **Tabel transaksi informatif** — kolom No, Nomor Transaksi, Tanggal, Tipe, Pihak, Metode, Status, Total, dan Aksi; aksi tersedia sebagai ikon Cetak, Edit, dan Hapus.
 - 🚦 **Pantau stok menipis** — lihat produk yang perlu segera diperhatikan berdasarkan stok minimum.
 - 📊 **Laporan persediaan** — tinjau transaksi dan nilai persediaan produk.
 - 🛡️ **Validasi stok** — transaksi barang keluar ditolak jika jumlah yang diminta melebihi stok tersedia.
@@ -141,7 +161,7 @@ Pembuatan transaksi dilakukan oleh fungsi database `proses_transaksi`; validasi,
 │   ├── database.sql         # Skema dan fungsi utama database
 │   └── rpc_setup.sql        # Skrip pemasangan ulang fungsi transaksi
 ├── docs/
-│   └── erd-skema-database.md # Dokumentasi ERD dan kamus data
+│   └── erd-skema-database-glowstock.md # Dokumentasi ERD dan kamus data
 ├── frontend/
 │   ├── index.html           # Halaman aplikasi
 │   ├── css/
